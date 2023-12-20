@@ -1,0 +1,237 @@
+Day 4 demos
+Angular Services:
+------------------
+1. create two components which are having same functionality
+	a. ng g c comp1
+	b. ng g c comp2
+2. Open comp1.component.html and add given below code:
+	<h1>This is Comp1</h1>
+	<button (click)="getMessage()">Get Message</button>
+3. Open comp1.component.ts and add given below code.
+	import { Component } from '@angular/core';
+
+	@Component({
+  		selector: 'app-comp1',
+  		templateUrl: './comp1.component.html',
+  		styleUrls: ['./comp1.component.css']
+	})
+	export class Comp1Component {
+  	getMessage(){
+    	alert("Good Morning and Welcome")
+	}
+
+	}
+4. Open comp2.component.html and add given below code:
+	<h1>This is Comp2</h1>
+	<button (click)="getMessage()">Get Message</button>
+5. Open comp1.component.ts and add given below code.
+	import { Component } from '@angular/core';
+
+	@Component({
+  		selector: 'app-comp2',
+  		templateUrl: './comp2.component.html',
+  		styleUrls: ['./comp2.component.css']
+	})
+	export class Comp2Component {
+  	getMessage(){
+    	alert("Good Morning and Welcome")
+	}
+	}
+
+Note: --> Add both selectors in app.component.html file
+after running application, two textboxes will appear on browser and both will display
+alert window with messsage "Good Morning and Welcome"
+But same thing can be achieve by using service
+6. To create service, fire command ng g s greetservice
+7. Open greetservice.service.ts file and add given below code.
+	import { Injectable } from '@angular/core';
+
+	@Injectable({
+	  providedIn: 'root'
+	})
+	export class GreetserviceService {
+
+	  constructor() { }
+
+	  getMessage(){
+	    alert("Hello Good Morning and Welcome...")
+	  }
+	}
+8. import greetservice in comp1 and comp2 and using object of service call 
+   common method. Open comp1.component.html and add given below code:
+	import { Component } from '@angular/core';
+	import { GreetserviceService } from '../greetservice.service';
+
+	@Component({
+	  selector: 'app-comp1',
+	  templateUrl: './comp1.component.html',
+	  styleUrls: ['./comp1.component.css']
+	})
+	export class Comp1Component {
+	  // create object using new keyword
+	  // obj = new GreetserviceService();
+	  // object injected in constructor
+	  constructor(private obj:GreetserviceService){}
+	  getMessage(){
+	    // alert("Good Morning and Welcome")
+	    this.obj.getMessage();
+	  }
+
+	}
+
+9. Open comp2.component.html and add given below code:
+	import { Component } from '@angular/core';
+	import { GreetserviceService } from '../greetservice.service';
+
+	@Component({
+	  selector: 'app-comp2',
+	  templateUrl: './comp2.component.html',
+	  styleUrls: ['./comp2.component.css']
+	})
+	export class Comp2Component {
+	  // create object using new keyword
+	  // obj = new GreetserviceService();
+	  // object injected in constructor
+	  constructor(private obj:GreetserviceService){}
+	  getMessage(){
+	    // alert("Good Morning and Welcome")
+	    this.obj.getMessage();
+	  }
+
+	}
+--------------------------------------------------------------------------------
+
+Components:
+-----------
+1. Create child component for AppCpmonent
+	ng g c child1
+2. Create child component for Child1 component
+	ng g c child1/child2
+3. Add selector of child1 in app.component.html
+	<h1>Services Demo</h1>
+	<app-comp1></app-comp1>
+	<app-comp2></app-comp2>
+	<app-child1></app-child1>
+4. Open child1.component.html and add selector of child2
+	<h1>This is Child 1</h1>
+	<app-child2></app-child2>
+----------------------------------------------------------------------------------
+Component Communication:
+Binding:
+----------
+Interpolation:
+-----------------
+1. Open child1.component.ts and add given below code:
+
+	import { Component } from '@angular/core';
+
+	@Component({
+	  selector: 'app-child1',
+	  templateUrl: './child1.component.html',
+	  styleUrls: ['./child1.component.css']
+	})
+	export class Child1Component {
+
+	  compName="Child 1 Component";
+	
+	  username ="BhushanHere24";
+
+	  getUserName(){
+	    return this.username;
+	  }
+
+	  getDate(){
+	    return new Date();
+	  }
+
+	  employees={
+	    ename:"Bhushan",
+	    eaddres:"Mumbai",
+	    eage:40
+	  }
+
+	  products=['Iphone 12', 'Iphone 13','Iphone 14']
+
+	  number1=200;
+	  number2=300;
+
+	  siteurl = window.location.href
+	  
+	}
+
+2. Open child1.component.html and add given below code.
+	
+	<h1>This is Child 1</h1>
+	<app-child2></app-child2>
+
+	<h2>Implementing Interploation</h2>
+	<h3>{{compName}}</h3>
+	<h3>{{getUserName()}}</h3>
+	<h3>{{getDate()}}</h3>
+	<h3>{{employees | json}}</h3>
+	<h3>{{employees.ename}}</h3>
+	<h3>{{products}}</h3>
+	<h3>{{products[0]}}</h3>
+	<h3>{{number1+number2}}</h3>
+	<h3>{{siteurl}}</h3>
+-------------------------------------------------------------------------------
+Property Binding:
+-------------------
+(download image and paste it in asset folder. /asset/img/your_img.jpg)
+1.Open child1.component.ts and add given below code:
+	// Property Binding - One way binding from ts to template
+
+  imgUrl = "/assets/img/CITIUSTECH-Logo-600x73.png"
+
+  placeholder = "Please Input values..."
+  disableBox=true;
+
+  enableMe(){
+    this.disableBox=false;
+    this.placeholder=""
+
+  }
+2. Open child1.component.html and add given below code.
+	<img src={{imgUrl}} alt="logo">
+	<br/>
+	<br/>
+	<img [src]="imgUrl" alt="logo">
+	<br/>
+3. To understand difference between interpolation and property binding.
+   Open child1.component.html and add given below code.
+	<input type="text" disabled={{disableBox}} value={{placeholder}}>
+	<br/>
+	<input type="text" [disabled]="disableBox" [value]="placeholder">
+	<br/>
+	<button (click)="enableMe()">Enable Me</button>	
+4. Open child1.component.ts and add given below code:
+	
+  placeholder = "Please Input values..."
+  disableBox=true;
+
+  enableMe(){
+    this.disableBox=false;
+    this.placeholder=""
+
+  }
+----------------------------------------------------------------------------------
+Event Binding
+---------------
+1. Open child1.component.html and add given below code.
+	<button (click)="likeMe()">Like</button>
+	<h3>Likes:{{count}}</h3>
+2. Open child1.component.ts and add given below code:
+
+  count=0
+  likeMe(){
+    this.count +=1;
+  }
+----------------------------------------------------------------------------------
+
+
+
+	
+
+
+	
+	

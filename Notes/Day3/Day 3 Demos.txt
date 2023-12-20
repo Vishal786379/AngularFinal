@@ -1,0 +1,137 @@
+Day 3 Demos:
+Demo 1. Create component
+ng g c header
+
+ng g c footer
+
+Module:
+--------
+Create module:
+Step 1. ng g m customer
+
+add modules in customer module
+Step 2. ng g c customer/custreg
+Step 3. ng g c customer/custlogin
+Step 4. ng g c customer/custforget
+
+----------------------------------------------------------------
+Open customer.module.ts add given below code
+----------------------------------------------------------------
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RegComponent } from './reg/reg.component';
+import { LoginComponent } from './login/login.component';
+import { ForgetComponent } from './forget/forget.component';
+
+
+@NgModule({
+  declarations: [
+    RegComponent,
+    LoginComponent,
+    ForgetComponent
+  ],
+  imports: [
+    CommonModule
+  ],
+  exports:[RegComponent, LoginComponent, ForgetComponent]
+})
+export class CustomerModule { }
+----------------------------------------------------------------
+open app.module.ts add given below code
+----------------------------------------------------------------
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { CustomerModule } from './customer/customer.module';
+
+@NgModule({
+  declarations: [
+    AppComponent,
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    CustomerModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+-----------------------------------------------------------------
+open index.html and add given below code
+-----------------------------------------------------------------
+<h1>Welcome to Citiustech....</h1>
+<app-forget></app-forget>
+<app-login></app-login>
+<app-reg></app-reg>
+------------------------------------------------------------------
+Directives:
+-----------
+Component Directives:
+--------------------
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-forget',
+  // templateUrl: './forget.component.html',
+  template:'<h1 style="color: blueviolet;">Forget Password</h1>',
+  // styleUrls: ['./forget.component.css']
+  styles:['h1 { font-weight: normal; }']
+})
+export class ForgetComponent {
+
+}
+------------------------------------------------------------------------
+Structural Directives:
+----------------------
+Open Login.component.ts file and add given below code
+--------------------------------------------------------------------------
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css']
+})
+export class LoginComponent {
+  customers =['James', 'John', 'Kim','Keanu']
+}
+
+---------------------------------------------------------------------------
+
+Open login.component.html and add given below code.
+---------------------------------------------------------------------------
+<h2>Customers List</h2>
+<ul *ngFor="let cust of customers">
+  <li>{{cust}}</li>
+</ul>
+---------------------------------------------------------------------------
+
+Pipe
+-------------
+Pipe
+Open reg.component.ts and add given below code:
+
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-reg',
+  templateUrl: './reg.component.html',
+  styleUrls: ['./reg.component.css']
+})
+export class RegComponent {
+  currentTime = new Date();
+  productName ="Iphone 13 Pro Max"
+
+}
+
+
+Open reg.component.html and add given below code.
+<h2>Product Info {{productName | uppercase}}</h2>
+<h2>Purchased on {{currentTime | date:'short'}}</h2>
+
+
+------------------------------------------------------------------
+
+

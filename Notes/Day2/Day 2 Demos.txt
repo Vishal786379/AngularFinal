@@ -1,0 +1,106 @@
+Day 2:
+---------------------------------------------------------------------------------
+Demo 1:
+App Folder:
+	To understand app folder and it's file we have seen given below demo:
+	Step 1: Open app.component.html and add given below code.
+		<button (click)="clickMe()">Click Me</button>
+	Step 2: Open app.component.ts file and add given below code.
+		import { Component } from '@angular/core';
+
+		@Component({
+		  selector: 'app-root',
+		  templateUrl: './app.component.html',
+ 		  styleUrls: ['./app.component.css']
+		})
+		export class AppComponent {
+  		title = 'Day2Demo';
+
+  			clickMe(){
+    			alert("Hi");
+  		}
+		}
+-----------------------------------------------------------------------------------
+.editorConfig
+Demo 2:	Click on extension in VS Code to install editorConfig. Type editorConfig 
+	in search box and install it. Then type code in any of ts file and
+	right click and format code so, code will be formatted as per configuration
+	is provided in .editorConfig file.
+-----------------------------------------------------------------------------------
+package.json and package-lock.json
+
+Editor config: EditorConfig helps maintain consistent coding styles for multiple 
+	developers working on the same project across various editors and IDEs. 
+	We can also do changes in editors configuration to make our code more readable.
+	a.	Open editorconfig file and discuss properties
+	b.	In order to understand that how we can change editor config follow given below steps:
+		Step 1. Open extension and search for editorconfig and then install it.
+		Step 2. Then for understanding create new class file and write simple code and test how 		editorconfiguration files configuration works
+Point 3: package.json
+	Version system  x.y.z = 0.0.0
+			15.2.0
+	15 major version, 2 minor version, 0 patch version
+	“~tilled 15.2.0” -Whenever there will be tilled operators it tells node js to install a package with version 	similar to major and minor but recent version of patch
+	“^carror 15.2.0” -Wherever there is ^ carrot operator, it tells node js to install a package whose minor and 	patch version must be recent one.
+------------------------------------------------------------------------------------
+Bootstrapping in Angular:
+	By default AppModule is bootstrap module but we can also change bootstrap module from
+	root module to our own module.
+
+	Steps to change bootstrap Module:
+		Step 1. Create new Module by firing command
+			ng g m testmodule
+		Step 2. Create new component in newly created module by firing given below command.
+			ng g  testmodule/testcomp
+		Step 3. Open main.ts file and import testmodule on the top and pass it as argument
+			in bootstrapModule() method.
+				import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+
+				import { AppModule } from './app/app.module';
+				import { TestmoduleModule } from './app/testmodule/testmodule.module';
+
+
+				platformBrowserDynamic().bootstrapModule(TestmoduleModule)
+  				.catch(err => console.error(err));
+		Step 4.Open index.html and add selector of testcomp in index.html
+
+				<!doctype html>
+				<html lang="en">
+				<head>
+				  <meta charset="utf-8">
+				  <title>Day2Demo</title>
+				  <base href="/">
+ 				  <meta name="viewport" content="width=device-width, initial-scale=1">
+				  <link rel="icon" type="image/x-icon" href="favicon.ico">
+				</head>
+				<body>
+					<h1>Hello From Index.html</h1>
+
+				 	 <app-testcomp></app-testcomp>
+				</body>
+				</html>
+
+		Step 5. Open testmodule.module.ts file and import BrowserModule on top and then import it in 
+			array of imports. Create array of bootstrap and add name of component.
+
+			import { NgModule } from '@angular/core';
+			import { CommonModule } from '@angular/common';
+			import { TestcompComponent } from './testcomp/testcomp.component';
+			import { BrowserModule } from '@angular/platform-browser';
+
+			@NgModule({
+			  declarations: [
+			    TestcompComponent
+			  ],
+			  imports: [
+			    CommonModule,
+			    BrowserModule
+			  ],
+			  bootstrap:[TestcompComponent]
+			})
+			export class TestmoduleModule { }
+------------------------------------------------------------------------------------------------------------------------
+
+	
+
+
